@@ -5,3 +5,5 @@
 # seeding our Campground
 
 # campground Index
+
+# campground show page to show the basics 
