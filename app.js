@@ -8,6 +8,7 @@ const Campground = require('./models/campground')
 const CatchAsync = require('./utils/CatchAsync')
 const ExpressError = require('./utils/ExpressError')
 const methodOverride = require('method-override')
+
 mongoose.connect('mongodb://localhost:27017/yelp-camp')
 
 //database connetion 
