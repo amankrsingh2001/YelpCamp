@@ -12,7 +12,6 @@ const campgrounds = require('./routes/campgrounds')
 const reviews = require('./routes/reviews')
 
 
-const app = express();
 mongoose.connect('mongodb://localhost:27017/yelp-camp')
 //database connetion 
 const db = mongoose.connection;
@@ -21,6 +20,8 @@ db.once('open',()=>{
     console.log('Database Connected')
 })
 
+
+const app = express();
 
 const sessionConfig = {
     secret: 'thisshouldbeabettersecret!',

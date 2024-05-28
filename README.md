@@ -13,3 +13,5 @@
 # method-override to manage the method of form
 
 # CRUD DONE 
+
+# passport js used for AUTH
