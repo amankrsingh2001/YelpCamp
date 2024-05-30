@@ -7,7 +7,7 @@ const reviews = require('../controllers/reviews')
 const {validateReview,isLoggedIn,isReviewAuthor} = require('../middleware')
 
 
-router.post('/',isLoggedIn,validateReview,CatchAsync(createReview))
+router.post('/',isLoggedIn,validateReview,CatchAsync(reviews.createReview))
 
 router.delete('/:reviewId',isLoggedIn,isReviewAuthor,CatchAsync(reviews.deleteReview))
 
