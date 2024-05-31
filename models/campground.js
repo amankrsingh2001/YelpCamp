@@ -1,12 +1,18 @@
 
 const mongoose = require('mongoose');
 const Review = require('./review');
+const { urlencoded } = require('express');
 const Schema = mongoose.Schema;
 
 const CampgroundSchema = new Schema({
     title:String,
     price:Number,
-    image:String,
+    images:[
+        {
+            url:String,
+            filename:String
+        }
+    ],
     description:String,
     location:String,
     author:{
