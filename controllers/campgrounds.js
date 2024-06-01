@@ -23,7 +23,7 @@ module.exports.createCampground =  async (req,res,next)=>{
     campground.author = req.user._id
     await campground.save();
     req.flash('success','Successfully made a new campground')
-    res.redirect(`/campgrounds/${campground._id}`)
+    return res.redirect(`/campgrounds/${campground._id}`)
 }
 
 module.exports.showCampground = async(req,res)=>{
@@ -34,7 +34,7 @@ module.exports.showCampground = async(req,res)=>{
         req.flash('error','Campground not found')
         return res.redirect('/campgrounds')
     }
-    res.render('campgrounds/show',{campground})
+    return  res.render('campgrounds/show',{campground})
 }
 module.exports.renderEditForm = async (req,res)=>{
     const {id} = req.params;
@@ -44,7 +44,7 @@ module.exports.renderEditForm = async (req,res)=>{
             return res.redirect('/campgrounds')
         }
        
-        res.render('campgrounds/edit',{campground})
+        return  res.render('campgrounds/edit',{campground})
 }
 
 module.exports.updateCampground = async(req,res)=>{
@@ -61,12 +61,12 @@ module.exports.updateCampground = async(req,res)=>{
    console.log(campground)
    }
     req.flash('success','Successfully updated the Campground')  
-    res.redirect(`/campgrounds/${campground._id}`)
+    return  res.redirect(`/campgrounds/${campground._id}`)
 }
 
 module.exports.deleteCampground = async (req,res)=>{
     const {id} = req.params
      await Campground.findByIdAndDelete(id)
      req.flash('success','Successfully deleted Campground')
-     res.redirect('/campgrounds')
+     return res.redirect('/campgrounds')
 }
