@@ -2,9 +2,6 @@ if(process.env.NODE_ENV != "production"){
     require('dotenv').config()
 }
 
-
-
-
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
@@ -33,9 +30,21 @@ db.once('open',()=>{
     console.log('Database Connected')
 })
 
+const app = express();
+
+app.engine('ejs',ejsMate)
+app.set('view engine','ejs');
+app.set('views',path.join(__dirname,"views"));
+
+app.use(express.urlencoded({extended:true}))
+app.use(methodOverride('_method'))
+app.use(express.static(path.join(__dirname,'public')))
+app.use(mongoSanitize({
+    replaceWith:'_'
+}))
+
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!'
 
-const app = express();
 
 const store = MongoDBStore.create({
     mongoUrl: dbUrl,
@@ -121,29 +130,12 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-app.set('view engine','ejs');
-app.set('views',path.join(__dirname,"views"));
-
-app.engine('ejs',ejsMate)
-
-app.use(express.urlencoded({extended:true}))
-app.use(methodOverride('_method'))
-app.use(express.static(path.join(__dirname,'public')))
-app.use(mongoSanitize({
-    replaceWith:'_'
-}))
 
 app.use((req,res,next)=>{
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     next()
-})
-
-app.get('/fakeUser',async (req,res)=>{
-    const user = new User({email:'colt1@gmasdfail',username:'coltsasfdtelle',})
-    const newUser =await User.register(user,'amanasfdkrasfsingh')
-    res.send(newUser);
 })
 
 
@@ -168,7 +160,6 @@ app.use((err,req,res,next)=>{
 })
 
 const port = process.env.PORT || 3000
-
 app.listen(port,()=>{
     console.log(`App is listining on ${port}`);
 })
