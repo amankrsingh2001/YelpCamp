@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 module.exports.renderRegister = (req,res)=>{
-    return res.render('users/register')
+   res.render('users/register')
 }
 
 module.exports.register = async(req,res,next)=>{
@@ -13,20 +13,20 @@ module.exports.register = async(req,res,next)=>{
           if(err) return next(err)
           req.flash('success','Welcome to yelp Camp')
          res.redirect('/campgrounds')
-         return 
+         
         })
        
     } catch (error) {
       req.flash('error',error.message)
        res.redirect('register')
-       return
+  
     }
   
   }
 
   module.exports.renderLogin = (req,res)=>{
     res.render('users/login')
-    return 
+
 }
 
 module.exports.login = (req,res)=>{
@@ -34,7 +34,7 @@ module.exports.login = (req,res)=>{
     const redirectUrl = res.locals.returnTo || '/campgrounds'; 
     delete req.session.returnTo
   res.redirect(redirectUrl)
-  return 
+  
 }
 
 module.exports.logout = (req,res)=>{
@@ -45,5 +45,5 @@ module.exports.logout = (req,res)=>{
     })
     req.flash('success',"GoodBye")
     res.redirect('/login')
-    return 
+    
 }
