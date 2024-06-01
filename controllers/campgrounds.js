@@ -32,8 +32,9 @@ module.exports.showCampground = async(req,res)=>{
     if(!campground){
         req.flash('error','Campground not found')
         return res.redirect('/campgrounds')
+    }else {
+        res.render('campgrounds/show',{campground}) //this section
     }
-    res.render('campgrounds/show',{campground})
 }
 module.exports.renderEditForm = async (req,res)=>{
     const {id} = req.params;
@@ -41,8 +42,10 @@ module.exports.renderEditForm = async (req,res)=>{
         if(!campground){
             req.flash('error','Cannot find that campground')
             return res.redirect('/campgrounds')
+        }else{
+            res.render('campgrounds/edit',{campground}) //this section
+
         }
-        res.render('campgrounds/edit',{campground})
 }
 
 module.exports.updateCampground = async(req,res)=>{
@@ -56,7 +59,6 @@ module.exports.updateCampground = async(req,res)=>{
         await cloudinary.uploader.destroy(filename)
     }
    await campground.updateOne({$pull:{images:{filename:{$in:req.body.deleteImages}}}})
-   console.log(campground)
    }
     req.flash('success','Successfully updated the Campground')  
     res.redirect(`/campgrounds/${campground._id}`)
