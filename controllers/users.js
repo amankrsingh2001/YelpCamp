@@ -40,5 +40,5 @@ module.exports.logout = (req,res)=>{
         }
     })
     req.flash('success',"GoodBye")
-    res.redirect('/login')
+    res.redirect('/campgrounds')
 }
