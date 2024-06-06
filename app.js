@@ -38,6 +38,7 @@ app.engine('ejs',ejsMate)
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,"views"));
 
+app.use(helmet({contentSecurityPolicy:false,crossOriginEmbedderPolicy:true}));
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname,'public')))
@@ -52,7 +53,7 @@ const scriptSrcUrls = [
     "https://api.tiles.mapbox.com",
     "https://api.mapbox.com",
     "https://kit.fontawesome.com",
-    "https://cdnjs.cloudflare.com",
+    "https://cdnjs.cloudflare.com", 
     "https://cdn.jsdelivr.net",
 ];
 const styleSrcUrls = [
@@ -123,7 +124,7 @@ const sessionConfig = {
 
 app.use(session(sessionConfig))
 app.use(flash())
-app.use(helmet())
+
 
 
 app.use(passport.initialize())
