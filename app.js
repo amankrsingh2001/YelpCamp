@@ -47,38 +47,6 @@ app.use(mongoSanitize({
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!'
 
-
-const store = MongoDBStore.create({
-    mongoUrl: dbUrl,
-    touchAfter: 24 * 60 * 60,
-    crypto: {
-        secret
-    }
-});
-
-store.on('error',function(e){
-    console.log('Session store Error',e)
-})
-
-const sessionConfig = {
-    store,
-    name:'session',
-    secret: 'thisshouldbeabettersecret!',
-    resave:false,
-    saveUninitialized :true,
-    cookie: {
-        httpOnly: true,
-        // secure:true,
-        expires:Date.now() + 1000*60*60*24*7,
-        maxAge:1000*60*60*24*7
-    }
-}
-
-
-app.use(session(sessionConfig))
-app.use(flash())
-app.use(helmet())
-
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com",
     "https://api.tiles.mapbox.com",
@@ -123,6 +91,39 @@ app.use(
         },
     })
 );
+
+
+
+const store = MongoDBStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret
+    }
+});
+
+store.on('error',function(e){
+    console.log('Session store Error',e)
+})
+
+const sessionConfig = {
+    store,
+    name:'session',
+    secret: 'thisshouldbeabettersecret!',
+    resave:false,
+    saveUninitialized :true,
+    cookie: {
+        httpOnly: true,
+        // secure:true,
+        expires:Date.now() + 1000*60*60*24*7,
+        maxAge:1000*60*60*24*7
+    }
+}
+
+
+app.use(session(sessionConfig))
+app.use(flash())
+app.use(helmet())
 
 
 app.use(passport.initialize())
